@@ -1,0 +1,2 @@
+# DeRozan
+ Solves "poeltl.dunk.town", an NBA guessing game, in the most mathematically optimal way, meaning in the least amount of guesses. Using information theory, the expected amount of information receive…Solves "poeltl.dunk.town", an NBA guessing game, in the most mathematically optimal way, meaning in the least amount of guesses. Using information theory, the expected amount of information received for each guess is found, and the guess with the most expected information is selected. Data webscraped from nba.com
