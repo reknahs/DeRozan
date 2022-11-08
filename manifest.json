@@ -1,0 +1,34 @@
+{
+    "name": "DeRozan",
+    "description": "Solves Poeltl game optimally",
+    "version": "0.1",
+    "manifest_version": 3,
+    "permissions": ["storage", "tabs"],
+    "host permissions": ["https://poeltl.dunk.town/"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["https://poeltl.dunk.town/"],
+          "js": ["contentScript.js"], 
+          "css": ["styles.css"]
+        }
+      ],
+    "icons": {
+      "16": "DeRozan.png",
+      "24": "DeRozan.png",
+      "32": "DeRozan.png",
+      "128": "DeRozan.png"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "DeRozan"
+    },
+    
+    "web_accessible_resources": [
+      {
+        "matches": ["https://poeltl.dunk.town/"]
+      }
+    ]
+  }
