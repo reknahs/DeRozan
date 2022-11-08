@@ -4,7 +4,7 @@
     "version": "0.1",
     "manifest_version": 3,
     "permissions": ["storage", "tabs", "contextMenus"],
-    "host permissions": ["https://poeltl.dunk.town/"],
+    "host_permissions": ["https://poeltl.dunk.town/"],
     "background": {
         "service_worker": "background.js"
     },
