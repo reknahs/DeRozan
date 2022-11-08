@@ -24,11 +24,5 @@
     "action": {
       "default_popup": "popup.html",
       "default_title": "DeRozan"
-    },
-    
-    "web_accessible_resources": [
-      {
-        "matches": ["https://poeltl.dunk.town/"]
-      }
-    ]
+    }
   }
