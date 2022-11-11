@@ -8,7 +8,7 @@
 //     console.log('success');
 //     alert('success');
 // }
-chrome.tabs.onUpdated.addListener(onPage);
+chrome.tabs.onUpdatedf.addListener(onPage);
 async function onPage(info) {
     alert('hi');
 }
