@@ -5,5 +5,5 @@
 //     }
 // })
 // chrome.tabs.onActivated.addListener(onPage);
-console.log('hello');
-alert('hello');
+// console.log('hello');
+// alert('hello');
