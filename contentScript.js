@@ -8,7 +8,8 @@
 //     console.log('success');
 //     alert('success');
 // }
-chrome.tabs.onUpdatedfdf.addListener(onPage);
+chrome.tabs.onUpdated.addListener(onPage);
+alert('cuh');
 async function onPage(info) {
     alert('hi');
 }
