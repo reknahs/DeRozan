@@ -1,7 +1,17 @@
+let {PythonShell} = require("python-shell");
+
 document.addEventListener("visibilitychange", DOMManipulation());
 
 var guessNum;
 var info;
+
+function data_extraction(info) {
+    alert('hi');
+    var pyshell = new PythonShell("compute.py");
+    pyshell.on('message', function (message) {
+        alert(message);
+    });
+}
 
 function DOMManipulation() {
     const textElements = document.getElementsByClassName("text");
@@ -30,4 +40,5 @@ function DOMManipulation() {
         }
         info.push(row);
     }
+    data_extraction(info);
 }
