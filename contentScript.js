@@ -1,4 +1,4 @@
-var _ = require("python-shell");
+let {PythonShell} = require("python-shell");
 
 document.addEventListener("visibilitychange", DOMManipulation());
 

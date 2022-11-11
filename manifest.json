@@ -14,7 +14,7 @@
           "js": ["contentScript.js"], 
           "css": ["styles.css"]
         }
-      ],
+    ],
     "icons": {
       "16": "DeRozan.png",
       "24": "DeRozan.png",
@@ -25,4 +25,4 @@
       "default_popup": "popup.html",
       "default_title": "DeRozan"
     }
-  }
+}
