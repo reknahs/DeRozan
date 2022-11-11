@@ -1,6 +1,6 @@
-// chrome.tabs.onUpdated.addListener((tabId, tab) => {
-//     if (tab.url && tab.url.includes("https://poeltl.dunk.town/")) {
-//       chrome.tabs.sendMessage(tabId);
-//     }
-// });
-console.log('yello');
+chrome.tabs.onActivated.addListener((tabId, tab) => {
+    if(tab.url && tab.url.includes("https://poeltl.dunk.town/")) {
+      console.log('success');
+      chrome.tabs.sendMessage(tabId);
+    }
+});
