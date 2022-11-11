@@ -3,10 +3,8 @@
 //         alert('yo');
 //     })
 // })();
-// for(let i = 0; i < 10; i++) {
-//     alert('Hi');
+alert('hi');
+// async function onPage() {
+//     console.log('success');
+//     alert('success');
 // }
-async function onPage() {
-    console.log('success');
-    alert('success');
-}
