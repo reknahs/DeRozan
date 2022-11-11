@@ -10,6 +10,9 @@
 // }
 // chrome.tabs.onUpdated.addListener(onPage);
 alert('cuh');
+chrome.tabs.onUpdated.addListener((info) => {
+    alert('hi');
+})
 // async function onPage(info) {
 //     alert('hi');
 // }
