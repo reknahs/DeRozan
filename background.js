@@ -4,4 +4,6 @@
 //         chrome.tabs.sendMessage();
 //     }
 // })
-chrome.tabs.onActivated.addListener(onPage);
+// chrome.tabs.onActivated.addListener(onPage);
+console.log('hello');
+alert('hello');
