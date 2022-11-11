@@ -30,12 +30,4 @@ function DOMManipulation() {
         }
         info.push(row);
     }
-    for(let i = 0; i < info.length; i++) {
-        for(let j = 0; j < info[i].length; j++) {
-            for(let k = 0; k < info[i][j].length; k++) {
-                alert(info[i][j][k]);
-            }
-        }
-    }
-
 }
