@@ -1,16 +1,10 @@
-let {PythonShell} = require("python-shell");
-
 document.addEventListener("visibilitychange", DOMManipulation());
 
 var guessNum;
 var info;
 
 function data_extraction(info) {
-    alert('hi');
-    var pyshell = new PythonShell("compute.py");
-    pyshell.on('message', function (message) {
-        alert(message);
-    });
+    alert('hello, what is good in the hood mjy guy fcuasdfasdfasdfkaslkjdf');
 }
 
 function DOMManipulation() {
