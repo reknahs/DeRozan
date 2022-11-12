@@ -29,10 +29,10 @@ const getPreviousTeamsAndAge = async() => {
     for(let i = 0; i < all_links.length; i++) {
         let url = all_links[i];
         console.log(url);
+        console.log(document.getElementsByClassName("Crom_text__NpR1_"));
         const rawData = await getRawData(url)
         const parsedData = cheerio.load(rawData);
-        const data = parsedData("table tbody tr td a");
-        console.log(data);
+        const data = parsedData("*");
         break;
     }
 }
