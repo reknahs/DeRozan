@@ -12,6 +12,7 @@ const getRawData = (URL) => {
         });
 }
 
+// gets requests for every link
 const getAllLinks = async() => {
     const contents = readFileSync("webscraping/links.txt", 'utf-8');
 
