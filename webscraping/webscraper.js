@@ -3,7 +3,7 @@ import cheerio from "cheerio";
 import {readFileSync, promises as fsPromises} from 'fs';
 
 // array of all links
-var all_links = []
+var all_links = [];
 
 const getRawData = (URL) => {
     return fetch(URL)
