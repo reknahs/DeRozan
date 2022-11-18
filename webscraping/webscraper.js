@@ -22,7 +22,7 @@ const getAllLinks = async() => {
         console.log(arr[i]);
         const rawData = await getRawData(arr[i]);
         const parsedData = cheerio.load(rawData);
-        const age = parsedData("div"); //[1]["children"][0]["data"];
+        const age = parsedData("div");
         for(let j = 0; j < age.length; j++) {
             for(let k = 0; k < age[j].children.length; k++) {
                 console.log(age[j].children[k]["data"]);
