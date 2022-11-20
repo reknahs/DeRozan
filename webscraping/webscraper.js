@@ -18,19 +18,12 @@ const getAllLinks = async() => {
     const contents = readFileSync("webscraping/links.txt", 'utf-8');
 
     const arr = contents.split(/\r?\n/);
-    for(let i = 0; i < arr.length-1; i++) {
+    for(let i = 0; i < 1; i++) {
         console.log(arr[i]);
         const rawData = await getRawData(arr[i]);
         const parsedData = cheerio.load(rawData);
-        const age = parsedData("div");
-        for(let j = 0; j < age.length; j++) {
-            for(let k = 0; k < age[j].children.length; k++) {
-                console.log(age[j].children[k]["data"]);
-            }
-        }
-        //console.log(age);
-        break;
-        // console.log(age.slice(age.indexOf("was born on")+12,age.length-1));
+        const age = parsedData("table.stats_table sortable row_summable now_sortable tbody tr.full_table");
+        console.log(age._root.prevObject.children);
     }
 
     // const rawParentData = await getRawData(parent_URL);
