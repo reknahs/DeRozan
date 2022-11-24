@@ -5,6 +5,8 @@ var info;
 
 function data_extraction(info) {
     alert('hello, what is good in the hood mjy guy fcuasdfasdfasdfkaslkjdf');
+    document.getElementsByClassName("layout").getElementsByTagName("main").insertAdjacentHTML("afterend",
+                "<aside>This is the aside information</aside>");
 }
 
 function DOMManipulation() {
