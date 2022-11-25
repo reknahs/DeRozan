@@ -1,0 +1,9 @@
+.game-table__head .game-table__row{
+    display:grid;
+    grid-template-columns: none;
+    font-size:.75em;
+    text-transform:uppercase;
+    color:#F05864;
+    font-weight:700;
+    text-align:center
+}
