@@ -1,9 +1,27 @@
-.game-table__head .game-table__row{
-    display:grid;
-    grid-template-columns: none;
-    font-size:.75em;
-    text-transform:uppercase;
-    color:#F05864;
-    font-weight:700;
-    text-align:center
+.game-table__head, .game-table__row, .game-table__body {
+    grid-template-columns: 100px 60px 60px;
+}
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+#answers {
+    width: 500px;
+    margin: 0 auto;
+    border-width: 10px;
+}  
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    color: #005864;
+    padding: 25px 0;
+    font-family: Inter;
+    text-align: center;
+    margin: 0 auto;
+    text-decoration: underline;
 }

@@ -5,87 +5,28 @@ var info;
 
 function data_extraction(info) {
     let HTML = `
-    <br><br><br><br><br><br>
+    <h2>Best Guesses</h2>
     <div class="container table-container">
-        <div class="game-table" style>
+        <div class="game-table" id ="answers">
             <div class="game-table__head">
                 <div class="game-table__row">
-                    <div class="game-table__cell">Ranking</div>
                     <div class="game-table__cell">Player Name</div>
+                    <div class="game-table__cell">Ranking</div>
                     <div class="game-table__cell">Expected Results</div>
                 </div>
             </div> 
             <div class="game-table__body">
                 <div class="game-table__row">
+                    <div class="game-table__cell center">Stephen Curry</div>
                     <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
-                    <div class="game-table__cell">234.234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell">1</div>
-                    <div class="game-table__cell">Stephen Curry</div>
                     <div class="game-table__cell">234.234</div>
                 </div>
             </div> 
         </div>
     </div>
-    `
-    document.getElementsByClassName("top-bar")[0].insertAdjacentHTML("afterend", HTML);
+    <br><br><br><br><br><br>
+    `;
+    document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 }
 
 function DOMManipulation() {

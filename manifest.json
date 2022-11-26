@@ -16,13 +16,13 @@
         }
     ],
     "icons": {
-      "16": "DeRozan.png",
-      "24": "DeRozan.png",
-      "32": "DeRozan.png",
-      "128": "DeRozan.png"
+      "16": "icon.png",
+      "24": "icon.png",
+      "32": "icon.png",
+      "128": "icon.png"
     },
     "action": {
-      "default_popup": "popup.html",
+      "default_popup": "popup/popup.html",
       "default_title": "DeRozan"
     }
   }
