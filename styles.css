@@ -1,12 +1,10 @@
-.game-table__head, .game-table__row, .game-table__body {
-    grid-template-columns: 100px 60px 60px;
-}
 .center {
     margin: 0 auto;
     text-align: center;
+    padding: 10px 10px 10px 10px;
 }
 #answers {
-    width: 500px;
+    width: 420px;
     margin: 0 auto;
     border-width: 10px;
 }  
@@ -24,4 +22,7 @@ h2 {
     text-align: center;
     margin: 0 auto;
     text-decoration: underline;
+}
+.h {
+    height: 30px;
 }
