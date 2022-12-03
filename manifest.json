@@ -24,5 +24,12 @@
     "action": {
       "default_popup": "popup/popup.html",
       "default_title": "DeRozan"
-    }
+    },
+    "web_accessible_resources": [
+      {
+        "resources": ["webscraping/data.txt", "webscraping/prevTeams.txt"],
+        "matches": ["https://poeltl.dunk.town/*"],
+        "use_dynamic_url": true
+      }
+    ]
   }

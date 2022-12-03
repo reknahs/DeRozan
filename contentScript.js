@@ -2,8 +2,9 @@ document.addEventListener("visibilitychange", DOMManipulation());
 
 var guessNum;
 var info;
+var data = [];
 
-function data_extraction(info) {
+function display_table() {
     let HTML = `
     <h2>Best Guesses</h2>
     <div class="container table-container">
@@ -54,9 +55,57 @@ function data_extraction(info) {
             </div> 
         </div>
     </div>
-    <br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     `;
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
+}
+
+function getPlayersWith(guess, team, conference, division, position, height, age, number, data) {
+
+}
+
+function compute_best() {
+    for(let i = 0; i < info.length; i++) {
+        let elims = getPlayersWith()
+        alert(info[i][0][0]);
+    }
+}
+
+function parse_file_data(info1, info2) {
+    for(let i = 0; i < info1.length-1; i++) {
+        let row = [];
+        let temp = info1[i].split(" ");
+        row.push(temp[temp.length-1]); //number 
+        row.push(temp[temp.length-2]); //height
+        row.push(temp[temp.length-3]); //position
+        row.push(temp[temp.length-4]); //team
+        let s = "";
+        for(let j = 0; j < temp.length-4; j++) {
+            s += temp[j] + " ";
+        }
+        row.push(s.trim());
+        temp = info2[i].split("|");
+        row.push(temp[0]);
+        let temp2 = temp[1].split(" ");
+        let row2 = [];
+        for(let j = 0; j < temp2.length-1; j++) {
+            row2.push(temp2[j]);
+        }
+        row.push(row2);
+        data.push(row);
+    }
+    compute_best();
+}
+
+function getText(link) {
+    const url = chrome.runtime.getURL(link);
+    return fetch(url).then((response) => response.text()).then((json) => json);
+}
+
+async function grabData() {
+    let info1 = await getText("webscraping/data.txt");
+    let info2 = await getText("webscraping/prevTeams.txt");
+    parse_file_data(info1.split("\n"), info2.split("\n"));
 }
 
 function DOMManipulation() {
@@ -86,5 +135,5 @@ function DOMManipulation() {
         }
         info.push(row);
     }
-    data_extraction(info);
+    grabData();
 }
