@@ -1,3 +1,3 @@
 # DeRozan - Chrome extension
 A chrome extension for solving the game Poeltl in the least amount of moves.
--Uses information theory 
+-using information theory 
