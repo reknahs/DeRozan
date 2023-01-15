@@ -6,7 +6,7 @@ import json
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-url = "https://poeltl.dunk.town/_nuxt/static/1671129304/state.js"
+url = "https://poeltl.dunk.town/_nuxt/static/1672683022/state.js"
 req = Request(
     url=url, 
     headers={'User-Agent': 'Mozilla/5.0'}
