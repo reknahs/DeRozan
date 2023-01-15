@@ -14,6 +14,7 @@ req = Request(
 )
 
 page_html = urlopen(req).read()
+
 page_soup = str(soup(page_html, "html.parser"))
 
 list1 = page_soup.split("(")[2].split(")")[0]
