@@ -22,8 +22,9 @@ vars = list1.split(",")
 
 vals = json.loads("["+page_soup.split("(")[-1].split(")")[-3]+"]")
 
-for i in range(len(vars)):
-    page_soup = page_soup.replace(":"+vars[i], ":"+str(vals[i]))
+for i in reversed(range(len(vars))):
+    page_soup = page_soup.replace(":"+vars[i], ": "+'"'+str(vals[i])+'"')
 
-print(page_soup)
-# print(len(vars), len(vals))
+n = page_soup.split("slug")
+for i in n[4:5]: print("{slug"+i[:-2])
+# print(vars)
