@@ -21,4 +21,9 @@ list1 = page_soup.split("(")[2].split(")")[0]
 vars = list1.split(",")
 
 vals = json.loads("["+page_soup.split("(")[-1].split(")")[-3]+"]")
-print(vars, vals)
+
+for i in range(len(vars)):
+    page_soup = page_soup.replace(":"+vars[i], ":"+str(vals[i]))
+
+print(page_soup)
+# print(len(vars), len(vals))
