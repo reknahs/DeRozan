@@ -12,6 +12,7 @@ req = Request(
     url=url, 
     headers={'User-Agent': 'Mozilla/5.0'}
 )
+
 page_html = urlopen(req).read()
 page_soup = str(soup(page_html, "html.parser"))
 
