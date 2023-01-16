@@ -1,3 +1,4 @@
+// main file
 document.addEventListener("visibilitychange", DOMManipulation());
 
 var guessNum;
