@@ -61,10 +61,6 @@ function display_table() {
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 }
 
-function Conference(team1, team2) {
-    return true;
-}
-
 function Division(team1, team2) {
     return true;
 }
@@ -73,61 +69,64 @@ function yellow_pos(pos1, pos2) {
     return true;
 }
 
+// data = name, team, conference, division, position, height, age, number
 function getPlayersWith(guess, team, conference, division, position, height, age, number) {
     let count = 0
     let elims = []
-    alert(data[0]);
     for(let i = 0; i < data.length; i++) {
         let requirement = 0;
-        if(team == "green" && data[i][3] == guess[3]) {
+        //check
+        if(team == "green" && data[i][1] == guess[1]) {
             requirement++;
         }
-        else if(team == "yellow" && data[i][6].includes(guess[3]) && data[i][3] != guess[3]) {
+        else if(team == "yellow" && data[i][7].includes(guess[1]) && data[i][1] != guess[3]) {
             requirement++;
         }
-        else if(team == "gray" && !data[i][6].includes(guess[3]) && data[i][3] != guess[3]) {
-            requirement++;
-        }
-
-        //NEED TO MAKE CONFERENCE FUNCTION
-        if(conference == "green" && Conference(data[i][3], guess[3])) {
-            requirement++;
-        }
-        else if(conference == "gray" && !Conference(data[i][3], guess[3])) {
+        else if(team == "gray" && !data[i][7].includes(guess[1]) && data[i][1] != guess[3]) {
             requirement++;
         }
 
-        //NEED TO MAKE DIVISION FUNCTION
-        if(division == "green" && Division(data[i][3], guess[3])) {
+        //check
+        if(conference == "green" && data[i][2] == guess[2]) {
             requirement++;
         }
-        else if(division == "gray" && !Division(data[i][3], guess[3])) {
+        else if(conference == "gray" && data[i][2] != guess[2]) {
+            requirement++;
+        }
+
+        //check
+        if(division == "green" && data[i][3] == guess[3]) {
+            requirement++;
+        }
+        else if(division == "gray" && data[i][3] != guess[3]) {
             requirement++;
         }
 
         //NEED TO MAKE YELLOW POS FUNCTION
-        if(position == "green" && data[i][2] == guess[2]) {
+        if(position == "green" && data[i][4] == guess[4]) {
             requirement++;
         }
-        else if(position == "yellow" && yellow_pos(data[i][2], guess[2])) {
+        else if(position == "yellow" && yellow_pos(data[i][4], guess[4])) {
             requirement++;
         }
-        else if(position == "gray" && data[i][2] != guess[2] && !yellow_pos(data[i][2], guess[2])) {
+        else if(position == "gray" && data[i][4] != guess[4] && !yellow_pos(data[i][2], guess[2])) {
             requirement++;
         }
-        
-        if(height[0] != "↓" && height[0] != "↑" && data[i][1] == guess[1]) {
-            requirement++;
-        }
-        else if(height.substring(1, height.length) == "yellow" && data[i][1] != guess[1]) {
-            if(height[0] == "↓") {
 
-            }
-            if(height[0] == "↑") {
+
+        // let real_height = 
+        // if(height[0] != "↓" && height[0] != "↑" && data[i][1] == guess[1]) {
+        //     requirement++;
+        // }
+        // else if(height.substring(1, height.length) == "yellow" && data[i][1] != guess[1]) {
+        //     if(height[0] == "↓") {
+
+        //     }
+        //     if(height[0] == "↑") {
                 
-            }
-        }
-        else {}
+        //     }
+        // }
+        // else {}
 
     }
 
@@ -212,6 +211,7 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 function compute_best() {
     for(let i = 0; i < info.length; i++) {
         let p = info[i];
+        alert(p[5][0][p[5][0].length-1]+p[5][1]);
         let elims = getPlayersWith(data[indices[p[0][0]]], p[3][1], p[1][1], p[2][1], p[4][1], p[5][0][p[5][0].length-1]+p[5][1], p[6][0][p[6][0].length-1]+p[6][1], p[7][0][p[7][0].length-1]+p[7][1]);
         break;
     }
@@ -222,6 +222,7 @@ function parse_file_data(info1) {
         let row = [];
         let temp = info1[i].split("|");
         row.push(temp[0]); //name 
+        indices[temp[0]] = i;
         row.push(temp[1]); //team
         row.push(temp[2]); //conference
         row.push(temp[3]); //division
