@@ -62,7 +62,7 @@ function display_table() {
     `;
 
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
-    
+
 }
 
 function yellow_pos(pos1, pos2) {
@@ -76,22 +76,23 @@ function getPlayersWith(guess, team, conference, division, position, height, age
     let count = 0
     let elims = []
     for(let i = 0; i < data.length; i++) {
+        if(data[i] == guess) continue;
         let requirement = 0;
         //check
-        if(team == "green") {
-            if(data[i][1] == guess[1]) {
-                requirement++;
-            }
-        }
-        else if(team == "yellow" && data[i][7].includes(guess[1]) && data[i][1] != guess[3]) {
+        if(team == "green" && data[i][1] == guess[1]) {
+            // alert(1);
             requirement++;
         }
-        else if(team == "gray" && !data[i][7].includes(guess[1]) && data[i][1] != guess[3]) {
+        else if(team == "yellow" && data[i][8].includes(guess[1]) && data[i][1] != guess[1]) {
+            requirement++;
+        }
+        else if(team == "gray" && !data[i][8].includes(guess[1]) && data[i][1] != guess[1]) {
             requirement++;
         }
 
         //check
         if(conference == "green" && data[i][2] == guess[2]) {
+            // alert(2);
             requirement++;
         }
         else if(conference == "gray" && data[i][2] != guess[2]) {
@@ -100,14 +101,16 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 
         //check
         if(division == "green" && data[i][3] == guess[3]) {
+            // alert(3);
             requirement++;
         }
         else if(division == "gray" && data[i][3] != guess[3]) {
             requirement++;
         }
 
-        //NEED TO MAKE YELLOW POS FUNCTION
+        //check
         if(position == "green" && data[i][4] == guess[4]) {
+            // alert(4);
             requirement++;
         }
         else if(position == "yellow" && yellow_pos(data[i][4], guess[4])) {
@@ -117,11 +120,11 @@ function getPlayersWith(guess, team, conference, division, position, height, age
             requirement++;
         }
 
-
         //check
         let real_height_data = parseInt(data[i][5][0])*12+parseInt(data[i][5][2]);
         let real_height_guess = parseInt(guess[5][0])*12+parseInt(guess[5][2]);
         if(height[0] != "↓" && height[0] != "↑" && data[i][5] == guess[5]) {
+            // alert(5);
             requirement++;
         }
         else if(height.substring(1, height.length) == "yellow" && data[i][5] != guess[5]) {
@@ -144,6 +147,7 @@ function getPlayersWith(guess, team, conference, division, position, height, age
         let real_age_data = parseInt(data[i][6]);
         let real_age_guess = parseInt(guess[6]);
         if(age[0] != "↓" && age[0] != "↑" && data[i][6] == guess[6]) {
+            // alert(6);
             requirement++;
         }
         else if(age.substring(1, age.length) == "yellow" && data[i][6] != guess[6]) {
@@ -166,6 +170,7 @@ function getPlayersWith(guess, team, conference, division, position, height, age
         let real_number_data = parseInt(data[i][7]);
         let real_number_guess = parseInt(guess[7]);
         if(number[0] != "↓" && number[0] != "↑" && data[i][7] == guess[7]) {
+            // alert(7);
             requirement++;
         }
         else if(number.substring(1, number.length) == "yellow" && data[i][7] != guess[7]) {
@@ -186,36 +191,47 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 
         if(requirement == 7) {
             count++;
+            alert(data[i][0]);
         }
         else {
             elims.push(i);
         }
-
     }
-
     return [count, elims];
 
 }
+
+function sortFunction(a, b) {
+    if (a[0] === b[0]) {
+        return 0;
+    }
+    else {
+        return (a[0] > b[0]) ? -1 : 1;
+    }
+}
+
 //guess, team, conference, division, position, height, age, number
 function getBestGuess() {
-    let m = [-1, null];
-    let two = ["green, gray"]
+    var best = [];
+    let two = ["green", "gray"]
     let three = ["green", "gray", "yellow"];
     let five = ['"green', "↓gray", "↑gray", "↓yellow", "↑yellow"];
     for(let i = 0; i < data.length; i++) {
         let guess = data[i];
+        if(i%100 == 0) alert(i);
         let total_bits = 0;
+        let asdf = 0;
         for(let t = 0; t < 3; t++) {
             for(let c = 0; c < 2; c++) {
                 for(let d = 0; d < 2; d++) {
-                    for(let p = 0; p < 5; p++) {
+                    for(let p = 0; p < 3; p++) {
                         for(let h = 0; h < 5; h++) {
                             for(let a = 0; a < 5; a++) {
                                 for(let n = 0; n < 5; n++) {
-                                    let proba = getPlayersWith(guess, three[t], two[c], two[d], five[p], five[h], five[a], five[[n]])[0]/data.length;
+                                    let proba = getPlayersWith(guess, three[t], two[c], two[d], three[p], five[h], five[a], five[n])[0]/data.length;
                                     if(proba == 0) continue;
-                                    alert(proba);
-                                    bits = -1*proba*(Math.log(proba)/Math.log(2));
+                                    bits = -1*proba*Math.log2(proba);
+                                    asdf += proba;
                                     total_bits += bits;
                                 }
                             }
@@ -224,18 +240,42 @@ function getBestGuess() {
                 }
             }
         }
+        alert(asdf);
         alert(total_bits);
-        if(total_bits > m[0]) {
-            m[0] = total_bits;
-            m[1] = guess;
-        }
+        best.push([total_bits, guess]);
     }
-    return m[1];
+    best.sort(sortFunction);
+    return best;
 }
 
 function startmain() {
-    let guess = getBestGuess();
-    alert(guess);
+    var base_arr = [data_copy[indices["Darius Days"]],
+                    data_copy[indices["Xavier Tillman"]],
+                    data_copy[indices["Louis King"]],
+                    data_copy[indices["Shai Gilgeous-Alexander"]],
+                    data_copy[indices["Herbert Jones"]],
+                    data_copy[indices["Kenyon Martin Jr."]],
+                    data_copy[indices["Isaiah Livers"]],
+                    data_copy[indices["Naji Marshall"]],
+                    data_copy[indices["Jack White"]],
+                    data_copy[indices["Derrick Jones Jr."]]];
+    // if(info.length == 0) {
+    //     display_table(base_arr);
+    // }
+    // else {
+    //     let best_guesses = getBestGuess().slice(0, 10);
+    // }
+    let guesses = getBestGuess().slice(0, 10);
+    alert(guesses[0][0].toString()+" "+guesses[0][1]);
+    alert(guesses[1][0].toString()+" "+guesses[1][1]);
+    alert(guesses[2][0].toString()+" "+guesses[2][1]);
+    alert(guesses[3][0].toString()+" "+guesses[3][1]);
+    alert(guesses[4][0].toString()+" "+guesses[4][1]);
+    alert(guesses[5][0].toString()+" "+guesses[5][1]);
+    alert(guesses[6][0].toString()+" "+guesses[6][1]);
+    alert(guesses[7][0].toString()+" "+guesses[7][1]);
+    alert(guesses[8][0].toString()+" "+guesses[8][1]);
+    alert(guesses[9][0].toString()+" "+guesses[9][1]);
 }
 
 function compute_best() {
