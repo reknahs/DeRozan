@@ -115,6 +115,7 @@ for i in names[2:-31]:
     if past_teams[0] == '': past_teams = []
     for j in range(len(past_teams)):
         past_teams[j] = team_ids[int(past_teams[j])]
+    if team in past_teams: past_teams.remove(team)
     
     division = divisions[team]
 

@@ -217,27 +217,21 @@ function compute_best() {
     }
 }
 
-function parse_file_data(info1, info2) {
+function parse_file_data(info1) {
     for(let i = 0; i < info1.length-1; i++) {
         let row = [];
-        let temp = info1[i].split(" ");
-        row.push(temp[temp.length-1]); //number 
-        row.push(temp[temp.length-2]); //height
-        row.push(temp[temp.length-3]); //position
-        row.push(temp[temp.length-4]); //team
-        let s = "";
-        for(let j = 0; j < temp.length-4; j++) {
-            s += temp[j] + " ";
-        }
-        indices[s.trim()] = i;
-        row.push(s.trim());
-        temp = info2[i].split("|");
-        row.push(temp[0]);
-        let temp2 = temp[1].split(" ");
+        let temp = info1[i].split("|");
+        row.push(temp[0]); //name 
+        row.push(temp[1]); //team
+        row.push(temp[2]); //conference
+        row.push(temp[3]); //division
+        row.push(temp[4]); //position
+        row.push(temp[5]); //height
+        row.push(temp[6]); //age
+        row.push(temp[7]); //number
         let row2 = [];
-        for(let j = 0; j < temp2.length-1; j++) {
-            if(temp2[j] == "CHO") row2.push("CHA");
-            else row2.push(temp2[j]);
+        for(let j = 0; j < temp[8].length; j += 3) {
+            row2.push(temp[8].slice(j, j+3))
         }
         row.push(row2);
         data.push(row);
@@ -252,8 +246,7 @@ function getText(link) {
 
 async function grabData() {
     let info1 = await getText("webscraping/data.txt");
-    let info2 = await getText("webscraping/prevTeams.txt");
-    parse_file_data(info1.split("\n"), info2.split("\n"));
+    parse_file_data(info1.split("\n"));
 }
 
 function DOMManipulation() {
