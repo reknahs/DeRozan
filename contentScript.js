@@ -3,6 +3,7 @@ document.addEventListener("visibilitychange", DOMManipulation());
 var guessNum;
 var info;
 var data = [];
+var data_copy = [];
 var indices = {};
 
 function display_table() {
@@ -61,12 +62,10 @@ function display_table() {
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 }
 
-function Division(team1, team2) {
-    return true;
-}
-
 function yellow_pos(pos1, pos2) {
-    return true;
+    yellow_po = {"C": ["F-C", "C-F"], "C-F": ["F-C", "C", "F", "G-F", "F-G"], "F-C": ["C-F", "C", "F", "G-F", "F-G"], "F": ["F-C", "C-F", "G-F", "F-G"], "F-G": ["G-F", "G", "F", "F-C", "C-F"],
+              "G-F": ["F-G", "G", "F", "F-C", "C-F"], "G": ["G-F", "F-G"]};
+    return yellow_po[pos1].includes(pos2);
 }
 
 // data = name, team, conference, division, position, height, age, number
@@ -76,8 +75,10 @@ function getPlayersWith(guess, team, conference, division, position, height, age
     for(let i = 0; i < data.length; i++) {
         let requirement = 0;
         //check
-        if(team == "green" && data[i][1] == guess[1]) {
-            requirement++;
+        if(team == "green") {
+            if(data[i][1] == guess[1]) {
+                requirement++;
+            }
         }
         else if(team == "yellow" && data[i][7].includes(guess[1]) && data[i][1] != guess[3]) {
             requirement++;
@@ -109,112 +110,140 @@ function getPlayersWith(guess, team, conference, division, position, height, age
         else if(position == "yellow" && yellow_pos(data[i][4], guess[4])) {
             requirement++;
         }
-        else if(position == "gray" && data[i][4] != guess[4] && !yellow_pos(data[i][2], guess[2])) {
+        else if(position == "gray" && data[i][4] != guess[4] && !yellow_pos(data[i][4], guess[4])) {
             requirement++;
         }
 
 
-        // let real_height = 
-        // if(height[0] != "↓" && height[0] != "↑" && data[i][1] == guess[1]) {
-        //     requirement++;
-        // }
-        // else if(height.substring(1, height.length) == "yellow" && data[i][1] != guess[1]) {
-        //     if(height[0] == "↓") {
+        //check
+        let real_height_data = parseInt(data[i][5][0])*12+parseInt(data[i][5][2]);
+        let real_height_guess = parseInt(guess[5][0])*12+parseInt(guess[5][2]);
+        if(height[0] != "↓" && height[0] != "↑" && data[i][5] == guess[5]) {
+            requirement++;
+        }
+        else if(height.substring(1, height.length) == "yellow" && data[i][5] != guess[5]) {
+            if(height[0] == "↓") {
+                if(real_height_guess-real_height_data <= 2 && real_height_guess-real_height_data > 0) {
+                    requirement++;
+                }
+            }
+            else if(height[0] == "↑") {
+                if(real_height_data-real_height_guess <= 2 && real_height_data-real_height_guess > 0) {
+                    requirement++;
+                }
+            }
+        }
+        else if(height.substring(1, height.length) == "gray" && data[i][5] != guess[5]){
+            requirement++;
+        }
 
-        //     }
-        //     if(height[0] == "↑") {
-                
-        //     }
-        // }
-        // else {}
+        //check
+        let real_age_data = parseInt(data[i][6]);
+        let real_age_guess = parseInt(guess[6]);
+        if(age[0] != "↓" && age[0] != "↑" && data[i][6] == guess[6]) {
+            requirement++;
+        }
+        else if(age.substring(1, age.length) == "yellow" && data[i][6] != guess[6]) {
+            if(age[0] == "↓") {
+                if(real_age_guess-real_age_data <= 2 && real_age_guess-real_age_data > 0) {
+                    requirement++;
+                }
+            }
+            else if(age[0] == "↑") {
+                if(real_age_data-real_age_guess <= 2 && real_age_data-real_age_guess > 0) {
+                    requirement++;
+                }
+            }
+        }
+        else if(age.substring(1, age.length) == "gray" && data[i][6] != guess[6]) {
+            requirement++;
+        }
+
+        //check
+        let real_number_data = parseInt(data[i][7]);
+        let real_number_guess = parseInt(guess[7]);
+        if(number[0] != "↓" && number[0] != "↑" && data[i][7] == guess[7]) {
+            requirement++;
+        }
+        else if(number.substring(1, number.length) == "yellow" && data[i][7] != guess[7]) {
+            if(number[0] == "↓") {
+                if(real_number_guess-real_number_data <= 2 && real_number_guess-real_number_data > 0) {
+                    requirement++;
+                }
+            }
+            else if(number[0] == "↑") {
+                if(real_number_data-real_number_guess <= 2 && real_number_data-real_number_guess > 0) {
+                    requirement++;
+                }
+            }
+        }
+        else if(number.substring(1, number.length) == "gray" && data[i][7] != guess[7]) {
+            requirement++;
+        }
+
+        if(requirement == 7) {
+            count++;
+        }
+        else {
+            elims.push(i);
+        }
 
     }
 
-    //     d = [int(guess[5][0]), int(guess[5][2:])]
-    //     g = [int(data[i][5][0]), int(data[i][5][2:])]
-    //     r = []
-    //     if d[1] - 1 >= 0:
-    //         r.append([d[0], d[1]-1])
-    //     else:
-    //         r.append([d[0]-1, 11])
+    return [count, elims];
 
-    //     if r[-1][1] - 1 >= 0:
-    //         r.append([r[-1][0], r[-1][1]-1])
-    //     else:
-    //         r.append([r[-1][0]-1, 11])
+}
+//guess, team, conference, division, position, height, age, number
+function getBestGuess() {
+    let m = [-1, null];
+    let two = ["green, gray"]
+    let three = ["green", "gray", "yellow"];
+    let five = ['"green', "↓gray", "↑gray", "↓yellow", "↑yellow"];
+    for(let i = 0; i < data.length; i++) {
+        let guess = data[i];
+        let total_bits = 0;
+        for(let t = 0; t < 3; t++) {
+            for(let c = 0; c < 2; c++) {
+                for(let d = 0; d < 2; d++) {
+                    for(let p = 0; p < 5; p++) {
+                        for(let h = 0; h < 5; h++) {
+                            for(let a = 0; a < 5; a++) {
+                                for(let n = 0; n < 5; n++) {
+                                    let proba = getPlayersWith(guess, three[t], two[c], two[d], five[p], five[h], five[a], five[[n]])[0]/data.length;
+                                    if(proba == 0) continue;
+                                    alert(proba);
+                                    bits = -1*proba*(Math.log(proba)/Math.log(2));
+                                    total_bits += bits;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        alert(total_bits);
+        if(total_bits > m[0]) {
+            m[0] = total_bits;
+            m[1] = guess;
+        }
+    }
+    return m[1];
+}
 
-    //     if d[1] + 1 <= 11:
-    //         r.append([d[0], d[1]+1])
-    //     else:
-    //         r.append([d[0]+1, 0])
-
-    //     if r[-1][1] + 1 <= 11:
-    //         r.append([r[-1][0], r[-1][1]+1])
-    //     else:
-    //         r.append([r[-1][0]+1, 0])
-
-    //     if height == 0:
-    //         if data[i][5] == guess[5]:
-    //             requirement += 1
-    //     elif height == 1:
-    //         if g in r[2:]:
-    //             requirement += 1
-    //     elif height == 2:
-    //         if g in r[:2]:
-    //             requirement += 1
-    //     elif height == 3:
-    //         if data[i][5] != guess[5] and g not in r and 100*g[0]+g[1] > 100*d[0]+d[1]:
-    //             requirement += 1
-    //     else:
-    //         if data[i][5] != guess[5] and g not in r and 100*g[0]+g[1] < 100*d[0]+d[1]:
-    //             requirement += 1
-
-    //     if age == 0:
-    //         if data[i][6] == guess[6]:
-    //             requirement += 1
-    //     elif age == 1:
-    //         if int(data[i][6]) in [int(guess[6])+1, int(guess[6])+2]:
-    //             requirement += 1
-    //     elif age == 2:
-    //         if int(data[i][6]) in [int(guess[6])-2, int(guess[6])-1]:
-    //             requirement += 1
-    //     elif age == 3:
-    //         if data[i][6] != guess[6] and int(data[i][6]) not in [int(guess[6])-2, int(guess[6])-1, int(guess[6])+1, int(guess[6])+2] and int(data[i][6]) > int(guess[6]):
-    //             requirement += 1
-    //     else:
-    //         if data[i][6] != guess[6] and int(data[i][6]) not in [int(guess[6])-2, int(guess[6])-1, int(guess[6])+1, int(guess[6])+2] and int(data[i][6]) < int(guess[6]):
-    //             requirement += 1
-
-    //     if number == 0:
-    //         if data[i][7] == guess[7]:
-    //             requirement += 1
-    //     elif number == 1:
-    //         if int(data[i][7]) in [int(guess[7])+1, int(guess[7])+2]:
-    //             requirement += 1
-    //     elif number == 2:
-    //         if int(data[i][7]) in [int(guess[7])-2, int(guess[7])-1]:
-    //             requirement += 1
-    //     elif number == 3:
-    //         if data[i][7] != guess[7] and int(data[i][7]) not in [int(guess[7])-2, int(guess[7])-1, int(guess[7])+1, int(guess[7])+2] and int(data[i][7]) > int(guess[7]):
-    //             requirement += 1
-    //     else:
-    //         if data[i][7] != guess[7] and int(data[i][7]) not in [int(guess[7])-2, int(guess[7])-1, int(guess[7])+1, int(guess[7])+2] and int(data[i][7]) < int(guess[7]):
-    //             requirement += 1
-
-    //     if requirement == 7:
-    //         count += 1
-    //     else:
-    //         elims.append(i)
-    // return [count,elims]
+function startmain() {
+    let guess = getBestGuess();
+    alert(guess);
 }
 
 function compute_best() {
     for(let i = 0; i < info.length; i++) {
         let p = info[i];
-        alert(p[5][0][p[5][0].length-1]+p[5][1]);
-        let elims = getPlayersWith(data[indices[p[0][0]]], p[3][1], p[1][1], p[2][1], p[4][1], p[5][0][p[5][0].length-1]+p[5][1], p[6][0][p[6][0].length-1]+p[6][1], p[7][0][p[7][0].length-1]+p[7][1]);
-        break;
+        let elims = getPlayersWith(data_copy[indices[p[0][0]]], p[3][1], p[1][1], p[2][1], p[4][1], p[5][0][p[5][0].length-1]+p[5][1], p[6][0][p[6][0].length-1]+p[6][1], p[7][0][p[7][0].length-1]+p[7][1]);
+        for(let j = elims[1].length-1; j >= 0; j--) {
+            data.splice(elims[1][j], 1);
+        }  
     }
+    startmain();
 }
 
 function parse_file_data(info1) {
@@ -236,6 +265,7 @@ function parse_file_data(info1) {
         }
         row.push(row2);
         data.push(row);
+        data_copy.push(row);
     }
     compute_best();
 }
