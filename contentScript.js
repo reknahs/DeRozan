@@ -60,8 +60,9 @@ function display_table() {
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     `;
-    
+
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
+    
 }
 
 function yellow_pos(pos1, pos2) {
