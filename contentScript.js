@@ -6,8 +6,7 @@ var data = [];
 var data_copy = [];
 var indices = {};
 
-function display_table() {
-
+function display_table(arr) {
     let HTML = `
     <h2>Best Guesses</h2>
     <div class="container table-container">
@@ -16,50 +15,20 @@ function display_table() {
                 <div class="game-table__row">
                     <div class="game-table__cell h">Player Name</div>
                     <div class="game-table__cell h">Ranking</div>
-                    <div class="game-table__cell h">Expected Results</div>
+                    <div class="game-table__cell h">Expected Info (Bits)</div>
                 </div>
             </div> 
             <div class="game-table__body">
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-                <div class="game-table__row">
-                    <div class="game-table__cell center">Stephen Curry</div>
-                    <div class="game-table__cell center">1</div>
-                    <div class="game-table__cell center">234</div>
-                </div>
-            </div> 
-        </div>
-    </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     `;
+    for(let i = 1; i <= arr.length; i++) {
+        let piece = `<div class="game-table__row">
+                        <div class="game-table__cell center">`+arr[i-1][0]+`</div>
+                        <div class="game-table__cell center">`+i.toString()+`</div>
+                        <div class="game-table__cell center">`+arr[i-1][1].toString()+`</div>
+                     </div>`;
+        HTML += piece;
+    }
+    HTML += `</div></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`;
 
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 
@@ -71,6 +40,7 @@ function yellow_pos(pos1, pos2) {
     return yellow_po[pos1].includes(pos2);
 }
 
+
 // data = name, team, conference, division, position, height, age, number
 function getPlayersWith(guess, team, conference, division, position, height, age, number) {
     let count = 0
@@ -80,7 +50,6 @@ function getPlayersWith(guess, team, conference, division, position, height, age
         let requirement = 0;
         //check
         if(team == "green" && data[i][1] == guess[1]) {
-            // alert(1);
             requirement++;
         }
         else if(team == "yellow" && data[i][8].includes(guess[1]) && data[i][1] != guess[1]) {
@@ -92,7 +61,6 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 
         //check
         if(conference == "green" && data[i][2] == guess[2]) {
-            // alert(2);
             requirement++;
         }
         else if(conference == "gray" && data[i][2] != guess[2]) {
@@ -101,7 +69,6 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 
         //check
         if(division == "green" && data[i][3] == guess[3]) {
-            // alert(3);
             requirement++;
         }
         else if(division == "gray" && data[i][3] != guess[3]) {
@@ -110,7 +77,6 @@ function getPlayersWith(guess, team, conference, division, position, height, age
 
         //check
         if(position == "green" && data[i][4] == guess[4]) {
-            // alert(4);
             requirement++;
         }
         else if(position == "yellow" && yellow_pos(data[i][4], guess[4])) {
@@ -121,10 +87,9 @@ function getPlayersWith(guess, team, conference, division, position, height, age
         }
 
         //check
-        let real_height_data = parseInt(data[i][5][0])*12+parseInt(data[i][5][2]);
-        let real_height_guess = parseInt(guess[5][0])*12+parseInt(guess[5][2]);
+        let real_height_data = parseInt(data[i][5][0])*12+parseInt(data[i][5].slice(2,data[i][5].length));
+        let real_height_guess = parseInt(guess[5][0])*12+parseInt(guess[5].slice(2,guess[5].length));
         if(height[0] != "↓" && height[0] != "↑" && data[i][5] == guess[5]) {
-            // alert(5);
             requirement++;
         }
         else if(height.substring(1, height.length) == "yellow" && data[i][5] != guess[5]) {
@@ -140,14 +105,22 @@ function getPlayersWith(guess, team, conference, division, position, height, age
             }
         }
         else if(height.substring(1, height.length) == "gray" && data[i][5] != guess[5]){
-            requirement++;
+            if(height[0] == "↓") {
+                if(real_height_guess-real_height_data > 2) {
+                    requirement++;
+                }
+            }
+            else if(height[0] == "↑") {
+                if(real_height_data-real_height_guess > 2) {
+                    requirement++;
+                }
+            }
         }
 
         //check
         let real_age_data = parseInt(data[i][6]);
         let real_age_guess = parseInt(guess[6]);
         if(age[0] != "↓" && age[0] != "↑" && data[i][6] == guess[6]) {
-            // alert(6);
             requirement++;
         }
         else if(age.substring(1, age.length) == "yellow" && data[i][6] != guess[6]) {
@@ -163,14 +136,22 @@ function getPlayersWith(guess, team, conference, division, position, height, age
             }
         }
         else if(age.substring(1, age.length) == "gray" && data[i][6] != guess[6]) {
-            requirement++;
+            if(age[0] == "↓") {
+                if(real_age_guess-real_age_data > 2) {
+                    requirement++;
+                }
+            }
+            else if(age[0] == "↑") {
+                if(real_age_data-real_age_guess > 2) {
+                    requirement++;
+                }
+            }
         }
 
         //check
         let real_number_data = parseInt(data[i][7]);
         let real_number_guess = parseInt(guess[7]);
         if(number[0] != "↓" && number[0] != "↑" && data[i][7] == guess[7]) {
-            // alert(7);
             requirement++;
         }
         else if(number.substring(1, number.length) == "yellow" && data[i][7] != guess[7]) {
@@ -186,12 +167,20 @@ function getPlayersWith(guess, team, conference, division, position, height, age
             }
         }
         else if(number.substring(1, number.length) == "gray" && data[i][7] != guess[7]) {
-            requirement++;
+            if(number[0] == "↓") {
+                if(real_number_guess-real_number_data > 2) {
+                    requirement++;
+                }
+            }
+            else if(number[0] == "↑") {
+                if(real_number_data-real_number_guess > 2) {
+                    requirement++;
+                }
+            }
         }
 
         if(requirement == 7) {
             count++;
-            alert(data[i][0]);
         }
         else {
             elims.push(i);
@@ -213,14 +202,12 @@ function sortFunction(a, b) {
 //guess, team, conference, division, position, height, age, number
 function getBestGuess() {
     var best = [];
-    let two = ["green", "gray"]
+    let two = ["green", "gray"];
     let three = ["green", "gray", "yellow"];
     let five = ['"green', "↓gray", "↑gray", "↓yellow", "↑yellow"];
     for(let i = 0; i < data.length; i++) {
         let guess = data[i];
-        if(i%100 == 0) alert(i);
         let total_bits = 0;
-        let asdf = 0;
         for(let t = 0; t < 3; t++) {
             for(let c = 0; c < 2; c++) {
                 for(let d = 0; d < 2; d++) {
@@ -231,7 +218,6 @@ function getBestGuess() {
                                     let proba = getPlayersWith(guess, three[t], two[c], two[d], three[p], five[h], five[a], five[n])[0]/data.length;
                                     if(proba == 0) continue;
                                     bits = -1*proba*Math.log2(proba);
-                                    asdf += proba;
                                     total_bits += bits;
                                 }
                             }
@@ -240,8 +226,6 @@ function getBestGuess() {
                 }
             }
         }
-        alert(asdf);
-        alert(total_bits);
         best.push([total_bits, guess]);
     }
     best.sort(sortFunction);
@@ -249,39 +233,39 @@ function getBestGuess() {
 }
 
 function startmain() {
-    var base_arr = [data_copy[indices["Darius Days"]],
-                    data_copy[indices["Xavier Tillman"]],
-                    data_copy[indices["Louis King"]],
-                    data_copy[indices["Shai Gilgeous-Alexander"]],
-                    data_copy[indices["Herbert Jones"]],
-                    data_copy[indices["Kenyon Martin Jr."]],
-                    data_copy[indices["Isaiah Livers"]],
-                    data_copy[indices["Naji Marshall"]],
-                    data_copy[indices["Jack White"]],
-                    data_copy[indices["Derrick Jones Jr."]]];
-    // if(info.length == 0) {
-    //     display_table(base_arr);
-    // }
-    // else {
-    //     let best_guesses = getBestGuess().slice(0, 10);
-    // }
-    let guesses = getBestGuess().slice(0, 10);
-    alert(guesses[0][0].toString()+" "+guesses[0][1]);
-    alert(guesses[1][0].toString()+" "+guesses[1][1]);
-    alert(guesses[2][0].toString()+" "+guesses[2][1]);
-    alert(guesses[3][0].toString()+" "+guesses[3][1]);
-    alert(guesses[4][0].toString()+" "+guesses[4][1]);
-    alert(guesses[5][0].toString()+" "+guesses[5][1]);
-    alert(guesses[6][0].toString()+" "+guesses[6][1]);
-    alert(guesses[7][0].toString()+" "+guesses[7][1]);
-    alert(guesses[8][0].toString()+" "+guesses[8][1]);
-    alert(guesses[9][0].toString()+" "+guesses[9][1]);
+    var base_arr = [["Isaiah Livers",7.89],
+                    ["Lindy Waters III",7.87],
+                    ["Jack White",7.83],
+                    ["Grant Williams",7.83],
+                    ["Lamar Stevens",7.82],
+                    ["Derrick Jones Jr.",7.73],
+                    ["Rui Hachimura",7.71],
+                    ["Jamal Cain",7.71],
+                    ["Brandom Ingram",7.7],
+                    ["Naji Marshall", 7.69]];
+    if(info.length == 0) {
+        display_table(base_arr);
+    }
+    else {
+        let best_guesses = getBestGuess().slice(0, 10);
+        var ten = [];
+        for(let i = 0; i < best_guesses.length; i++) {
+            ten.push([best_guesses[i][1][0], best_guesses[i][0]]);
+        }
+        display_table(ten);
+    }
 }
 
 function compute_best() {
     for(let i = 0; i < info.length; i++) {
         let p = info[i];
-        let elims = getPlayersWith(data_copy[indices[p[0][0]]], p[3][1], p[1][1], p[2][1], p[4][1], p[5][0][p[5][0].length-1]+p[5][1], p[6][0][p[6][0].length-1]+p[6][1], p[7][0][p[7][0].length-1]+p[7][1]);
+        let height = "green";
+        let age = "green";
+        let number = "green";
+        if(p[5][1] != "green") height = p[5][0][p[5][0].length-1]+p[5][1];
+        if(p[6][1] != "green") age = p[6][0][p[6][0].length-1]+p[6][1];
+        if(p[7][1] != "green") number = p[7][0][p[7][0].length-1]+p[7][1];
+        let elims = getPlayersWith(data_copy[indices[p[0][0]]], p[3][1], p[1][1], p[2][1], p[4][1], height, age, number);
         for(let j = elims[1].length-1; j >= 0; j--) {
             data.splice(elims[1][j], 1);
         }  
@@ -290,6 +274,15 @@ function compute_best() {
 }
 
 function parse_file_data(info1) {
+
+    for(let i = info1.length-1; i >= 0; i--) {
+        if(info1[i].split("|")[1] == "Free Agent") {
+            info1.splice(i, 1);
+        }
+        else if(info1[i].split("|")[7] == "N/A") {
+            info1.splice(i, 1);
+        }
+    }
     for(let i = 0; i < info1.length-1; i++) {
         let row = [];
         let temp = info1[i].split("|");
@@ -301,6 +294,7 @@ function parse_file_data(info1) {
         row.push(temp[4]); //position
         row.push(temp[5]); //height
         row.push(temp[6]); //age
+        if(temp[7] == "00") temp[7] = "0";
         row.push(temp[7]); //number
         let row2 = [];
         for(let j = 0; j < temp[8].length; j += 3) {
