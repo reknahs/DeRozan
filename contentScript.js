@@ -7,7 +7,7 @@ var data_copy = [];
 var indices = {};
 
 function display_table() {
-    
+
     let HTML = `
     <h2>Best Guesses</h2>
     <div class="container table-container">
@@ -60,6 +60,7 @@ function display_table() {
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     `;
+    
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 }
 
