@@ -207,6 +207,16 @@ function getBestGuess() {
     let three = ["green", "gray", "yellow"];
     let five = ['"green', "↓gray", "↑gray", "↓yellow", "↑yellow"];
     for(let i = 0; i < data.length; i++) {
+        let test = true;
+        for(let j = 0; j < info.length; j++) {
+            alert(data[i][0]);
+            alert(info[j][0][0]);
+            if(data[i][0] == info[j][0][0]) {
+                test = false;
+                break;
+            }
+        }
+        if(!test) continue;
         let guess = data[i];
         let total_bits = 0;
         for(let t = 0; t < 3; t++) {
