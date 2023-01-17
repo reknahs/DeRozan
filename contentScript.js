@@ -1,5 +1,6 @@
 // main file
 document.addEventListener("visibilitychange", DOMManipulation());
+document.addEventListener("click", DOMManipulation());
 
 var guessNum;
 var info;
@@ -29,6 +30,15 @@ function display_table(arr) {
                      </div>`;
         HTML += piece;
     }
+    //extra start
+    for(let i = 0; i < info.length; i++) {
+        HTML += `<div class="game-table__row">
+        <div class="game-table__cell center">asf</div>
+        <div class="game-table__cell center">asdf</div>
+        <div class="game-table__cell center">asfd</div>
+     </div>`;
+    }
+    //extra end
     HTML += `</div></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`;
 
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
@@ -209,8 +219,6 @@ function getBestGuess() {
     for(let i = 0; i < data.length; i++) {
         let test = true;
         for(let j = 0; j < info.length; j++) {
-            alert(data[i][0]);
-            alert(info[j][0][0]);
             if(data[i][0] == info[j][0][0]) {
                 test = false;
                 break;
