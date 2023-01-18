@@ -1,11 +1,6 @@
 // main file
-document.addEventListener("visibilitychange", DOMManipulation);
-// document.addEventListener("click", test);
-
-// function test() {
-//     document.getElementsByClassName("footer-container")[0].innerHTML += "Hello World";
-//     // document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", "This stuff");
-// }
+let observer = new MutationObserver(mutobs);
+observer.observe(document.getElementsByClassName("game-table__body")[0], {childList: true})
 
 
 var guessNum;
@@ -14,10 +9,16 @@ var data = [];
 var data_copy = [];
 var indices = {};
 
+function mutobs(mutations) {
+    for(let mutation of mutations) {
+        if(mutation.type == "childList") DOMManipulation();
+    }
+}
+
 function display_table(arr) {
     let HTML = `
-    <h2>Best Guesses</h2>
-    <div class="container table-container" id="newly_added">
+    <h2 id="newly_added1">Best Guesses</h2>
+    <div class="container table-container" id="newly_added2">
         <div class="game-table" id ="answers">
             <div class="game-table__head">
                 <div class="game-table__row">
@@ -36,16 +37,16 @@ function display_table(arr) {
                      </div>`;
         HTML += piece;
     }
-    //extra start
-    // for(let i = 0; i < info.length; i++) {
-    //     HTML += `<div class="game-table__row">
-    //     <div class="game-table__cell center">asf</div>
-    //     <div class="game-table__cell center">asdf</div>
-    //     <div class="game-table__cell center">asfd</div>
-    //  </div>`;
-    // }
-    //extra end
-    HTML += `</div></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`;
+    const element1 = document.getElementById("newly_added1");
+    const element2 = document.getElementById("newly_added2");
+    const element3 = document.getElementsByClassName("n");
+    if(element1 != null) element1.remove();
+    if(element2 != null) element2.remove();
+    for(let i = element3.length-1; i >= 0; i--) {
+        element3[i].remove();
+    }
+
+    HTML += `</div></div></div><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n"><br class="n">`;
 
     document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", HTML);
 
@@ -369,6 +370,7 @@ function DOMManipulation() {
         }
         info.push(row);
     }
-    grabData();
+    if(data.length == 0) grabData();
+    else compute_best();
 }
 DOMManipulation();
