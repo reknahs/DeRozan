@@ -1,4 +1,4 @@
-// main file
+// main file (algorithm)
 let observer = new MutationObserver(mutobs);
 observer.observe(document.getElementsByClassName("game-table__body")[0], {childList: true})
 
