@@ -1,6 +1,12 @@
 // main file
-document.addEventListener("visibilitychange", DOMManipulation());
-document.addEventListener("click", DOMManipulation());
+document.addEventListener("visibilitychange", DOMManipulation);
+// document.addEventListener("click", test);
+
+// function test() {
+//     document.getElementsByClassName("footer-container")[0].innerHTML += "Hello World";
+//     // document.getElementsByClassName("footer-container")[0].insertAdjacentHTML("beforebegin", "This stuff");
+// }
+
 
 var guessNum;
 var info;
@@ -11,7 +17,7 @@ var indices = {};
 function display_table(arr) {
     let HTML = `
     <h2>Best Guesses</h2>
-    <div class="container table-container">
+    <div class="container table-container" id="newly_added">
         <div class="game-table" id ="answers">
             <div class="game-table__head">
                 <div class="game-table__row">
@@ -31,13 +37,13 @@ function display_table(arr) {
         HTML += piece;
     }
     //extra start
-    for(let i = 0; i < info.length; i++) {
-        HTML += `<div class="game-table__row">
-        <div class="game-table__cell center">asf</div>
-        <div class="game-table__cell center">asdf</div>
-        <div class="game-table__cell center">asfd</div>
-     </div>`;
-    }
+    // for(let i = 0; i < info.length; i++) {
+    //     HTML += `<div class="game-table__row">
+    //     <div class="game-table__cell center">asf</div>
+    //     <div class="game-table__cell center">asdf</div>
+    //     <div class="game-table__cell center">asfd</div>
+    //  </div>`;
+    // }
     //extra end
     HTML += `</div></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>`;
 
@@ -260,7 +266,7 @@ function startmain() {
                     ["Derrick Jones Jr.",7.73],
                     ["Rui Hachimura",7.71],
                     ["Jamal Cain",7.71],
-                    ["Brandom Ingram",7.7],
+                    ["Brandom Ingram",7.70],
                     ["Naji Marshall", 7.69]];
     if(info.length == 0) {
         display_table(base_arr);
@@ -365,3 +371,4 @@ function DOMManipulation() {
     }
     grabData();
 }
+DOMManipulation();
