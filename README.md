@@ -4,3 +4,4 @@ A chrome extension for solving the game Poeltl in the least amount of moves.
 -webscraping
 -web development
 -algorithmic programming
+-data manipulation
