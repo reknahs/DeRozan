@@ -5,7 +5,7 @@ A chrome extension for solving the game Poeltl in the least amount of moves.
   -web development
   -algorithmic programming
   -data manipulation
-  -data ext
+  -data extr
   -HTML
   -CSS
   -JavaScript
